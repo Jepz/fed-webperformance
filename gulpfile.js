@@ -1,5 +1,4 @@
 var gulp = require('gulp'),
-    sass = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     csso = require('gulp-csso'),
     htmlmin = require('gulp-htmlmin'),
@@ -16,14 +15,14 @@ var gulp = require('gulp'),
 // HTML
 gulp.task('html', function() {
     return gulp.src('app/*.html')
-    .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
+    .pipe(htmlmin({collapseWhitespace: true,removeComments: true, preserveLineBreaks: false}))
     .pipe(gulp.dest('dist/'))
     .pipe(notify({ message: 'HTML task complete' }))
 });
 
 gulp.task('htmlViews', function() {
     return gulp.src('app/views/*.html')
-    .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
+    .pipe(htmlmin({collapseWhitespace: true, removeComments: true, preserveLineBreaks: false}))
     .pipe(gulp.dest('dist/views'))
     .pipe(notify({ message: 'HTML-Views task complete' }))
 });
@@ -35,7 +34,7 @@ gulp.task('styles', function() {
     .pipe(autoprefixer('last 2 version'))
     .pipe(gulp.dest('dist/styles'))
     .pipe(rename({ suffix: '.min' }))
-    .pipe(csso())
+    .pipe(csso({compress: true}))
     .pipe(gulp.dest('dist/styles'))
     .pipe(notify({ message: 'Styles task complete' }));
 });
@@ -45,7 +44,6 @@ gulp.task('scripts', function() {
   return gulp.src('app/scripts/*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'))
-    //.pipe(concat('main.js'))
     .pipe(gulp.dest('dist/scripts'))
     .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
@@ -56,7 +54,7 @@ gulp.task('scripts', function() {
 // Images
 gulp.task('images', function() {
   return gulp.src('app/images/*')
-    .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+    .pipe(cache(imagemin({ interlaced: true })))
     .pipe(gulp.dest('dist/images'))
     .pipe(notify({ message: 'Images task complete' }));
 });

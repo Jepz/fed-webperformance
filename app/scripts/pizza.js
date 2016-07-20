@@ -376,7 +376,7 @@ var pizzaElementGenerator = function(i) {
   pizzaContainer.style.width = "33.33%";
   pizzaContainer.style.height = "325px";
   pizzaContainer.id = "pizza" + i;                // gives each pizza element a unique id
-  pizzaImageContainer.classList.add("col-md-6");
+  pizzaImageContainer.classList.add("col-md-6", "col-xs-6");
 
   pizzaImage.src = "../images/pizza.png";
   pizzaImage.classList.add("img-responsive");
@@ -384,7 +384,7 @@ var pizzaElementGenerator = function(i) {
   pizzaContainer.appendChild(pizzaImageContainer);
 
 
-  pizzaDescriptionContainer.classList.add("col-md-6");
+  pizzaDescriptionContainer.classList.add("col-md-6", "col-xs-6");
 
   pizzaName = document.createElement("h4");
   pizzaName.innerHTML = randomName();
@@ -404,15 +404,18 @@ var resizePizzas = function(size) {
 
   // Changes the value for the size of the pizza above the slider
   function changeSliderLabel(size) {
+    // as we call for a elemnt everytime, I created a variable outside the switch.
+    // went with getElementById as it is faster than querySelector
+    var pizzaSizedId = document.getElementById('pizzaSize');
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        pizzaSizedId.innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        pizzaSizedId.innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        pizzaSizedId.innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -496,11 +499,17 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
+  // Phase will have a max of 5 variables, add them into an array.
+  // Placed the Phase variable outside the loop to seperate when we call the DOM and methods.
+  // scrollNumber is constant, so it didn't need to be inside a loop.
+  // getElementsByClassName is faster than querySelectorAll.
+
   var items = document.getElementsByClassName('mover'),
   scrollNumber = document.body.scrollTop / 1250,
   phase = [],
   lenItems = items.length;
-  
+
+
   for (var i = 0; i < 5; i++) {
     phase[i]= Math.sin(scrollNumber + (i % 5));
   }
@@ -531,13 +540,19 @@ document.addEventListener('DOMContentLoaded', function() {
 	screenHeight = window.screen.height,
 	rows = Math.floor(screenHeight / s),
 	numberPizzas = rows * cols;
+  // To calculate the total number of pizzas that we will put in the screen, 
+  // we calculate the screen height, then we divide it by s, to know the number
+  // of rows, and round it to an integer. 
+  // Lastly multiply the rows with the cols */
+
 	
+  // No need to have 200 pizzas, so we put an exact number instead.
   for (var i = 0; i < numberPizzas; i++) {
    	elem = document.createElement('img'),
     elem.className = 'mover',
     elem.src = "../images/pizza.png",
     elem.style.height = "100px",
-    elem.style.width = "73.333px",
+    elem.style.width = "77px",
     elem.basicLeft = (i % cols) * s,
 	elem.style.top = (Math.floor(i / cols) * s) + 'px';
     movingPizzas.appendChild(elem);
