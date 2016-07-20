@@ -28,7 +28,7 @@ Start it by adding this in the console:
 
 ### Changes in file structure
 I didn't like it was originally setup, so moved all the scripts, styles, html, and images to their own folders.
-```
+
 app
 - images
 	- 2048.png
@@ -56,7 +56,7 @@ dist
 gulpfile.js
 package.json
 README.md
-```
+
 App is working folder, dist is the optimized and minifyed files.
 
 ### Images
@@ -86,4 +86,3 @@ App is working folder, dist is the optimized and minifyed files.
 - [Picked npm csso over cssnano](https://goalsmashers.github.io/css-minification-benchmark/)
 - [Leverage Browser Caching](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching)
 - [JankFree](http://jankfree.org/)
-- 
