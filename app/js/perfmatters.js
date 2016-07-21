@@ -1,6 +1,6 @@
 // Measuring the Critical Rendering Path with Navigation Timing
 // https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp
-//hello 
+
 function logCRP() {
   var t = window.performance.timing,
     dcl = t.domContentLoadedEventStart - t.domLoading,
@@ -12,5 +12,3 @@ function logCRP() {
 window.addEventListener("load", function(event) {
   logCRP();
 });
-
-console.log("hello world  ello");
